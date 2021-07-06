@@ -1,0 +1,21 @@
+sudo: required
+sevices:
+ - docker
+
+before_install:
+ - docker build -t stephengrider/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+ - docker run stephengrider/react-test npm test -- --coverage
+
+after_succes:
+ - docker build -t stephengrider/multi-client ./client
+ - docker build -t stephengrider/multi-nginx ./nginx
+ - docker build -t stephengrider/multi-server ./server
+ - docker build -t stephengrider/multi-worker ./worker
+#pushing into docker hub
+ - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+ - docker push stephengrider/multi-client
+ - docker push stephengrider/multi-nginx
+ - docker push stephengrider/multi-server
+ - docker push stephengrider/multi-worker
