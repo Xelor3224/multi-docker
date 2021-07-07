@@ -1,0 +1,37 @@
+{
+ "AWSEBDockerrunVersion": 2,
+ "containerDefinitions": [
+  {
+   "name": "client",
+   "image": "xelooo/multi-client",
+   "hostname": "client",
+   "essential": false
+  },
+  {
+   "name": "server",
+   "image": "xelooo/multi-server",
+   "hostname": "api",
+   "essential": false
+  },
+  {
+   "name": "worker",
+   "image": "xelooo/multi-worker",
+   "hostname": "worker",
+   "essential": false
+  },
+  {
+   "name": "nginx",
+   "image": "xelooo/multi-nginx",
+   "hostname": "nginx",
+   "essential": true,
+   "portMappings": [
+    {
+     "hostPort": 80,
+     "containerPort": 60
+    }
+   ],
+   "links": ["client", "server"]
+  }
+
+ ]
+}

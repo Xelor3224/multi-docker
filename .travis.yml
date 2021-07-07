@@ -19,3 +19,15 @@ after_succes:
  - docker push xelooo/multi-nginx
  - docker push xelooo/multi-server
  - docker push xelooo/multi-worker
+
+deploy:
+ provider: elasticbeanstalk
+ region: 'eu-central-1'
+ app: 'multi-docker'
+ env: 'MultiDocker-env'
+ bucket_name: 'elasticbeanstalk-eu-central-1-911883860443'
+ bucket_path: 'docker-multi'
+ on:
+  branch: master
+ access_key_id: $AWS_ACCESS_KEY
+ secret_access_key: $AWS_SECRET_KEY
